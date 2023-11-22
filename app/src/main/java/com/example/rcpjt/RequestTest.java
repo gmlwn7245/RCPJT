@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class RequestTest {
 
-    private static final String HOST = "http://10.0.2.2:21/";
+    private static final String HOST = "http://3.39.253.104/";
 
     public String httpConnPost() {
         String path = "test.php";

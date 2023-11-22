@@ -1,9 +1,11 @@
 package com.example.rcpjt;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
-    final static private String url = "http://10.0.2.2/test.php";
+    final static private String url = "http://3.39.253.104/test.php";
     public static RequestQueue requestQueue;
 
     @Override
@@ -23,24 +25,187 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TEST 버튼
-        Button testBtn = (Button)findViewById(R.id.testBtn);
-        testBtn.setOnClickListener(new View.OnClickListener(){
+
+        // 버튼 모음
+        TextView leftView = (TextView)findViewById(R.id.leftView);
+        TextView rightView = (TextView)findViewById(R.id.rightView);
+        TextView goView = (TextView)findViewById(R.id.goView);
+        TextView backView = (TextView)findViewById(R.id.backView);
+
+
+        // 좌회전 버튼
+        leftView.setOnTouchListener(new View.OnTouchListener(){
             @Override
-            public void onClick(View view) {
+            public boolean onTouch(View v, MotionEvent event) {
                 Thread th = new Thread(new Runnable(){
                     @Override
                     public void run(){
-                        Log.v("run", "Success");
-                        httpGetConn("go", "0");
+                        if(event.getAction() == MotionEvent.ACTION_DOWN){
+                            Log.v("leftPressed", "success");
+                            httpGetConn("left", "0");
+                            leftView.setBackgroundColor(Color.parseColor("#2A450B"));
+                        }
+                        if(event.getAction() == MotionEvent.ACTION_UP){
+                            Log.v("leftUnPressed", "success");
+                            httpGetConn("mid", "0");
+                            leftView.setBackgroundColor(Color.parseColor("#B6F66B"));
+                            //pressed = false;
+                        }
+                    }
+                });
+                th.start();
+
+                return true;
+            }
+        });
+
+        rightView.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Thread th = new Thread(new Runnable(){
+                    @Override
+                    public void run(){
+                        if(event.getAction() == MotionEvent.ACTION_DOWN){
+                            Log.v("rightPressed", "success");
+                            httpGetConn("right", "0");
+                            rightView.setBackgroundColor(Color.parseColor("#2A450B"));
+                            //pressed = true;
+                        }
+                        if(event.getAction() == MotionEvent.ACTION_UP){
+                            Log.v("rightUnPressed", "success");
+                            httpGetConn("mid", "0");
+                            rightView.setBackgroundColor(Color.parseColor("#B6F66B"));
+                        }
+                    }
+                });
+                th.start();
+
+                return true;
+            }
+        });
+
+        goView.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Thread th = new Thread(new Runnable(){
+                    @Override
+                    public void run(){
+                        if(event.getAction() == MotionEvent.ACTION_DOWN){
+                            Log.v("goPressed", "success");
+                            httpGetConn("go", "0");
+                            goView.setBackgroundColor(Color.parseColor("#FA4747"));
+                            // #FFADAD
+                            //pressed = true;
+                        }
+                        if(event.getAction() == MotionEvent.ACTION_UP){
+                            Log.v("rightUnPressed", "success");
+                            httpGetConn("stop", "0");
+                            //pressed = false;
+                            goView.setBackgroundColor(Color.parseColor("#FFADAD"));
+                        }
+                    }
+                });
+                th.start();
+
+                return true;
+            }
+        });
+
+        backView.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Thread th = new Thread(new Runnable(){
+                    @Override
+                    public void run(){
+                        if(event.getAction() == MotionEvent.ACTION_DOWN){
+                            Log.v("goPressed", "success");
+                            httpGetConn("back", "0");
+                            backView.setBackgroundColor(Color.parseColor("#2F4DEF"));
+                        }
+                        if(event.getAction() == MotionEvent.ACTION_UP){
+                            Log.v("rightUnPressed", "success");
+                            httpGetConn("stop", "0");
+                            // #8494EA
+                            backView.setBackgroundColor(Color.parseColor("#8494EA"));
+                        }
+                    }
+                });
+                th.start();
+
+                return true;
+            }
+        });
+
+        // TEST VIEW
+        /*
+        TextView testText = (TextView)findViewById(R.id.textView);
+        testText.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.v("Touch", "success");
+                Thread th = new Thread(new Runnable(){
+                    @Override
+                    public void run(){
+                        if(event.getAction() == MotionEvent.ACTION_DOWN){
+                            Log.v("pressed", "success");
+                            httpGetConn("go", "0");
+                            //pressed = true;
+                        }
+                        if(event.getAction() == MotionEvent.ACTION_UP){
+                            Log.v("unPressed", "success");
+                            httpGetConn("mid", "0");
+                            //pressed = false;
+                        }
+                    }
+                });
+                th.start();
+
+                return true;
+            }
+        });
+
+        */
+
+        /*
+        // TEST 버튼
+        Button testBtn = (Button)findViewById(R.id.testBtn);
+        testBtn.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                System.out.println("TOUCH");
+
+                return false;
+            }
+
+            //boolean pressed = false;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                Log.v("touch", "success");
+
+                Thread th = new Thread(new Runnable(){
+
+                    @Override
+                    public void run(){
+                        Log.v("status", event.getAction()+"");
+
+                        if(event.getAction() == MotionEvent.ACTION_DOWN){
+                            Log.v("pressed", "success");
+                            httpGetConn("go", "0");
+                            //pressed = true;
+                        }else if(event.getAction() == MotionEvent.ACTION_UP){
+                            Log.v("unPressed", "success");
+                            httpGetConn("mid", "0");
+                            //pressed = false;
+                        }
                     }
                 });
 
                 th.start();
+                return false;
             }
+        });*/
 
-
-        });
     }
 
     public static void httpGetConn(String cmdString, String argString){
