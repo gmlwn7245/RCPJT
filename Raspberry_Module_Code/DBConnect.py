@@ -5,7 +5,7 @@ from threading import Timer, Lock
 
 class ConnectDB:
     def __init__(self):
-        self.db = mysql.connector.connect(host='3.39.25.146', user='ssafyysh', password='1234', database='testDB',
+        self.db = mysql.connector.connect(host='', user='', password='', database='',
                                           auth_plugin='mysql_native_password')
         self.cur = self.db.cursor()
         self.lock = Lock()

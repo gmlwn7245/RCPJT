@@ -17,7 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
-    final static private String url = "http://3.39.253.104/test.php";
+    final static private String url = "http://{ip주소}/test.php";
     public static RequestQueue requestQueue;
 
     @Override
