@@ -25,18 +25,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         // 버튼 모음
         TextView leftView = (TextView)findViewById(R.id.leftView);
         TextView rightView = (TextView)findViewById(R.id.rightView);
         TextView goView = (TextView)findViewById(R.id.goView);
         TextView backView = (TextView)findViewById(R.id.backView);
+        TextView stopView = (TextView)findViewById(R.id.stopView);
 
 
         // 좌회전 버튼
         leftView.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
                 Thread th = new Thread(new Runnable(){
                     @Override
                     public void run(){
@@ -54,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 th.start();
-
                 return true;
             }
         });
@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         goView.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
                 Thread th = new Thread(new Runnable(){
                     @Override
                     public void run(){
@@ -97,9 +98,10 @@ public class MainActivity extends AppCompatActivity {
                             // #FFADAD
                             //pressed = true;
                         }
+
                         if(event.getAction() == MotionEvent.ACTION_UP){
                             Log.v("rightUnPressed", "success");
-                            httpGetConn("stop", "0");
+                            //httpGetConn("stop", "0");
                             //pressed = false;
                             goView.setBackgroundColor(Color.parseColor("#FFADAD"));
                         }
@@ -122,12 +124,14 @@ public class MainActivity extends AppCompatActivity {
                             httpGetConn("back", "0");
                             backView.setBackgroundColor(Color.parseColor("#2F4DEF"));
                         }
+
                         if(event.getAction() == MotionEvent.ACTION_UP){
                             Log.v("rightUnPressed", "success");
-                            httpGetConn("stop", "0");
+                            //httpGetConn("stop", "0");
                             // #8494EA
                             backView.setBackgroundColor(Color.parseColor("#8494EA"));
                         }
+
                     }
                 });
                 th.start();
@@ -136,26 +140,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // TEST VIEW
-        /*
-        TextView testText = (TextView)findViewById(R.id.textView);
-        testText.setOnTouchListener(new View.OnTouchListener(){
+        stopView.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Log.v("Touch", "success");
                 Thread th = new Thread(new Runnable(){
                     @Override
                     public void run(){
                         if(event.getAction() == MotionEvent.ACTION_DOWN){
-                            Log.v("pressed", "success");
-                            httpGetConn("go", "0");
-                            //pressed = true;
+                            Log.v("goPressed", "success");
+                            httpGetConn("stop", "0");
+                            stopView.setBackgroundColor(Color.parseColor("#FF3D00"));
                         }
+
                         if(event.getAction() == MotionEvent.ACTION_UP){
-                            Log.v("unPressed", "success");
-                            httpGetConn("mid", "0");
-                            //pressed = false;
+                            Log.v("rightUnPressed", "success");
+                            //httpGetConn("stop", "0");
+                            // #8494EA
+                            stopView.setBackgroundColor(Color.parseColor("#FFFF0459"));
                         }
+                        //
                     }
                 });
                 th.start();
@@ -163,49 +166,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        */
-
-        /*
-        // TEST 버튼
-        Button testBtn = (Button)findViewById(R.id.testBtn);
-        testBtn.setOnTouchListener(new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                System.out.println("TOUCH");
-
-                return false;
-            }
-
-            //boolean pressed = false;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event){
-                Log.v("touch", "success");
-
-                Thread th = new Thread(new Runnable(){
-
-                    @Override
-                    public void run(){
-                        Log.v("status", event.getAction()+"");
-
-                        if(event.getAction() == MotionEvent.ACTION_DOWN){
-                            Log.v("pressed", "success");
-                            httpGetConn("go", "0");
-                            //pressed = true;
-                        }else if(event.getAction() == MotionEvent.ACTION_UP){
-                            Log.v("unPressed", "success");
-                            httpGetConn("mid", "0");
-                            //pressed = false;
-                        }
-                    }
-                });
-
-                th.start();
-                return false;
-            }
-        });*/
-
     }
 
     public static void httpGetConn(String cmdString, String argString){
