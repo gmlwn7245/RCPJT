@@ -1,5 +1,5 @@
 # RC Car Project 🚗
-을 이용한 RC Car 제작 프로젝트
+Raspberry Pi, OpenCV, MySQL 및 AndroidStudio를 이용한 RC Car 제작 프로젝트
 
 <img src="https://github.com/gmlwn7245/RCPJT/assets/62199070/f450f24b-95e7-4ac0-8261-68d2da30ba07"  width="400" height="300"/>
 <br />
